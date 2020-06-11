@@ -33,13 +33,7 @@
         $(el)
           .contents()
           .each((i, e) => {
-            p.push(
-              processElement(
-                e,
-                el.name === "ol",
-                el.name === "code" && el.hasClass("markup--pre-code")
-              )
-            );
+            p.push(processElement(e, el.name === "ol", el.name === "pre"));
           });
         const processed = p.join("");
 
@@ -100,11 +94,11 @@
           return "\n\n---\n";
         }
 
-        if (el.name === "code" && el.hasClass("markup--p-code")) {
+        if (el.name === "code" && $(el).hasClass("markup--p-code")) {
           return `\`${processed}\``;
         }
 
-        if (el.name === "code" && el.hasClass("markup--pre-code")) {
+        if (el.name === "code" && $(el).hasClass("markup--pre-code")) {
           return `\n\`\`\`\n${processed}\n\`\`\`\n`;
         }
 
