@@ -11,7 +11,7 @@
         .text();
       const headline = $(".p-summary").text();
       const author = $(".p-author").text();
-      const publishedTime = $(".dt-pubblished").attr("datetime");
+      const publishedTime = $(".dt-published").attr("datetime");
       const markdown = $(".section-inner")
         .contents()
         .toArray()

@@ -3,7 +3,7 @@
   define(require => {
     const cheerio = require("cheerio");
 
-    const processElement = (element, orderedList = false) => {
+    const processElement = (element, orderedList = false, pre = false) => {
       const $ = cheerio.load(element);
       const el = $(element).get(0);
 
@@ -33,7 +33,13 @@
         $(el)
           .contents()
           .each((i, e) => {
-            p.push(processElement(e, el.name === "ol"));
+            p.push(
+              processElement(
+                e,
+                el.name === "ol",
+                el.name === "code" && el.hasClass("markup--pre-code")
+              )
+            );
           });
         const processed = p.join("");
 
@@ -87,19 +93,27 @@
         }
         if (el.name === "pre") {
           // return `\n~~~\n${processed}\n~~~\n`;
-          return `\n${processed}`;
+          return `${processed}`;
         }
 
         if (el.name === "hr") {
           return "\n\n---\n";
         }
 
-        if (el.name === "code" && el.classList.contains("markup--p-code")) {
+        if (el.name === "code" && el.hasClass("markup--p-code")) {
           return `\`${processed}\``;
         }
 
-        if (el.name === "code" && el.classList.contains("markup--pre-code")) {
+        if (el.name === "code" && el.hasClass("markup--pre-code")) {
           return `\n\`\`\`\n${processed}\n\`\`\`\n`;
+        }
+
+        if (el.name === "br") {
+          if (pre) {
+            return "\n";
+          } else {
+            return "  \n";
+          }
         }
 
         console.log(`parse-medium: unprocessed tag <${el.name}>`);
