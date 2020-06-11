@@ -86,8 +86,7 @@
           return `\n${processed}`;
         }
         if (el.name === "pre") {
-          // return `\n~~~\n${processed}\n~~~\n`;
-          return `${processed}`;
+          return `\n\`\`\`\n${processed}\n\`\`\`\n`;
         }
 
         if (el.name === "hr") {
@@ -96,10 +95,6 @@
 
         if (el.name === "code" && $(el).hasClass("markup--p-code")) {
           return `\`${processed}\``;
-        }
-
-        if (el.name === "code" && $(el).hasClass("markup--pre-code")) {
-          return `\n\`\`\`\n${processed}\n\`\`\`\n`;
         }
 
         if (el.name === "br") {
