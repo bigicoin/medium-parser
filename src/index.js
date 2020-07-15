@@ -12,7 +12,7 @@
       const headline = $(".p-summary").text();
       const author = $(".p-author").text();
       const publishedTime = $(".dt-published").attr("datetime");
-      const markdown = $(".section-inner")
+      const markdown = $(".section-inner, div.section-divider")
         .contents()
         .toArray()
         .map(processElement)
